@@ -50,11 +50,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'gambar_1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gambar_2' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gambar_3' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        // $request->validate([
+        //     'gambar_1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'gambar_2' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'gambar_3' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
 
         $gambar1 = $request->file('gambar_1');
         $gambar2 = $request->file('gambar_2');
