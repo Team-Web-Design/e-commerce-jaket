@@ -17,12 +17,12 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        
+        $this->middleware('auth');
     }
 
     public function index()
     {
-        $products=Product::all();
+        $products = Product::all();
         return view('customer.product.index', compact('products'));
     }
 
@@ -56,7 +56,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        if ($product){
+        if ($product) {
             return view('customer.product.show', compact('product'));
         } else {
             return redirect('customer/product')->with('errors', 'Produk tidak ditemukan');
@@ -65,7 +65,7 @@ class ProductController extends Controller
 
     public function image($imageName)
     {
-        $filePath = storage_path(env('PATH_IMAGE').$imageName);
+        $filePath = storage_path(env('PATH_IMAGE') . $imageName);
         return Image::make($filePath)->response();
     }
 

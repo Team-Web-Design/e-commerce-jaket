@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+}
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,3 +43,6 @@ Route::get('customer/carts', 'Customer\CartController@index')->name('customer.ca
 Route::get('customer/carts/add/{id}', 'Customer\CartController@add')->name('customer.carts.add');
 Route::patch('customer/carts/update', 'Customer\CartController@update')->name('customer.carts.update');
 Route::delete('customer/carts/remove', 'Customer\CartController@remove')->name('customer.carts.remove');
+
+// Route::resource('produk', 'Customer\ProductController');
+// Route::resource('cart', 'Customer\CartController');
