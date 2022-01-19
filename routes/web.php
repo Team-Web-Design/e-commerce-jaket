@@ -32,3 +32,11 @@ Route::name('admin.')->group(function () {
         Route::get('dashboard', 'Admin\AdminController@dashboard')->middleware('is_admin');
     });
 });
+
+Route::get('customer/produk', 'Customer\ProductController@index')->name('customer.produk.index');
+Route::get('customer/produk/{id}', 'Customer\ProductController@show')->name('customer.produk.show');
+Route::get('customer/produk/image/{imageName}', 'Customer\ProductController@image')->name('customer.produk.image');
+Route::get('customer/carts', 'Customer\CartController@index')->name('customer.carts.index');
+Route::get('customer/carts/add/{id}', 'Customer\CartController@add')->name('customer.carts.add');
+Route::patch('customer/carts/update', 'Customer\CartController@update')->name('customer.carts.update');
+Route::delete('customer/carts/remove', 'Customer\CartController@remove')->name('customer.carts.remove');

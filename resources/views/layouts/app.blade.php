@@ -50,6 +50,12 @@
                         </li>
                         @endif
                         -->
+                        <li class="nav-item">
+                            <a href="{{ route('customer.carts.index') }}" class="btn btn-primary btn-block">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>Cart<span
+                                    class="badge badge-pill badge-danger">{{ count([session('cart')]) }}</span>
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -46,3 +46,7 @@
     font-size: .75rem;
     text-transform: uppercase;
 }
+
+.card {
+    box-shadow: rgba(51, 51, 51, 0.349) 0 2px 2px 0;
+}
