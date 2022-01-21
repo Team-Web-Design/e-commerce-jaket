@@ -22,8 +22,7 @@ class CartController extends Controller
 
     public function index()
     {
-        $cart = Cart::all();
-
+        $cart = Cart::with('produk')->where('id_user', auth()->user()->id)->get();
         return view('customer.carts.index', ['cart' => $cart]);
     }
 
@@ -53,6 +52,13 @@ class CartController extends Controller
                     "gambar_1" => $product->gambar_1
                 ]
             ];
+            $cart[$id]['stok']++;
+            session()->put('cart', $cart);
+            $customerCart->id_produk = $product->id;
+            $customerCart->id_user = auth()->user()->id;
+            $customerCart->stok = $cart[$id]['stok'];
+            $customerCart->harga = $cart[$id]['harga'];
+            $customerCart->save();
             session()->put('cart', $cart);
             return redirect('customer/carts')->with('succcess', 'Produk sudah ditambhakan ke keranjang!');
         }
@@ -74,6 +80,13 @@ class CartController extends Controller
                 "harga" => $product->harga,
                 "gambar_1" => $product->gambar_1
             ];
+            $cart[$id]['stok']++;
+            session()->put('cart', $cart);
+            $customerCart->id_produk = $product->id;
+            $customerCart->id_user = auth()->user()->id;
+            $customerCart->stok = $cart[$id]['stok'];
+            $customerCart->harga = $cart[$id]['harga'];
+            $customerCart->save();
             session()->put('cart', $cart);
             return redirect('customer/carts')->with('success', 'Produk sudah ditambhakan ke keranjang!');
         } else {
@@ -92,7 +105,6 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**

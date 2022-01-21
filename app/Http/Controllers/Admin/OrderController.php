@@ -1,39 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\Admin\Product;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
+use App\Models\Customer\Order;
+use App\Models\Customer\OrderDetail;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth');
-    }
-
-    // public function index()
-    // {
-    //     $products = Product::with('review')->get();
-    //     return view('customer.product.index', compact('products'));
-    // }
-
-    public function index(Request $request)
-    {
-        $productInstance = new Product();
-        $products = $productInstance->orderProducts($request->get('order_by'));
-        if ($request->ajax()) {
-            return response()->json($products, 200);
-        }
-        return view('customer.product.index', compact('products'));
+        $order = Order::with('alamat')->get();
+        $order_detail = OrderDetail::with('produk', 'user', 'order')->get();
+        return view('admin.order.index', compact('order', 'order_detail'));
     }
 
     /**
@@ -65,18 +50,6 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        if ($product) {
-            return view('customer.product.show', compact('product'));
-        } else {
-            return redirect('customer/product')->with('errors', 'Produk tidak ditemukan');
-        }
-    }
-
-    public function image($imageName)
-    {
-        $filePath = storage_path(env('PATH_PRODUCT_IMAGE') . $imageName);
-        return Image::make($filePath)->response();
     }
 
     /**
@@ -99,7 +72,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        Order::where('id', $id)->update(
+            [
+                'status_pemesanan' => $request->status
+            ]
+        );
+
+        // $order = Order::with('user')->get();
+        return redirect()->route('admin.order.index');
     }
 
     /**

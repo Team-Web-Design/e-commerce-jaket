@@ -2,38 +2,26 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Cart;
 use Illuminate\Http\Request;
-use App\Models\Admin\Product;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
+use App\Models\Customer\Address;
 
-class ProductController extends Controller
+class AddressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     public function __construct()
     {
         $this->middleware('auth');
     }
-
-    // public function index()
-    // {
-    //     $products = Product::with('review')->get();
-    //     return view('customer.product.index', compact('products'));
-    // }
-
-    public function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $productInstance = new Product();
-        $products = $productInstance->orderProducts($request->get('order_by'));
-        if ($request->ajax()) {
-            return response()->json($products, 200);
-        }
-        return view('customer.product.index', compact('products'));
+        // return view()
     }
 
     /**
@@ -43,7 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('customer.address.create');
     }
 
     /**
@@ -54,7 +42,27 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $address = new Address();
+        $address->user_id = auth()->user()->id;
+        $address->alamat = $request->alamat;
+        $address->nomor_telepon = $request->nomor_telepon;
+        $address->kode_pos = $request->kode_pos;
+        $address->kecamatan = $request->kecamatan;
+        $address->kabupaten = $request->kabupaten;
+
+        $address->save();
+
+        return redirect()->route('order-detail.index');
+
+        // $cart = Cart::where('id_user', auth()->user()->id)->get();
+        // $address = Address::where('user_id', auth()->user()->id)->get();
+        // $total_harga = 0;
+
+        // foreach ($cart as $item) {
+        //     # code...
+        //     $total_harga += $item['harga'] * $item['stok'];
+        // }
+        // return view('customer.order-detail.index', compact('cart', 'address', 'total_harga'));
     }
 
     /**
@@ -65,18 +73,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        if ($product) {
-            return view('customer.product.show', compact('product'));
-        } else {
-            return redirect('customer/product')->with('errors', 'Produk tidak ditemukan');
-        }
-    }
-
-    public function image($imageName)
-    {
-        $filePath = storage_path(env('PATH_PRODUCT_IMAGE') . $imageName);
-        return Image::make($filePath)->response();
+        //
     }
 
     /**

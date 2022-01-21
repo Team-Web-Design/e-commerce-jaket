@@ -15,9 +15,12 @@ class CreateOrderTable extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_keranjang');
-            $table->double('total');
-            $table->foreign('id_keranjang')->references('id')->on('keranjang')->onDelete('cascade');
+            $table->double('total_harga');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_alamat');
+            $table->string('bank');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_alamat')->references('id')->on('alamat')->onDelete('cascade');
             $table->timestamps();
         });
     }

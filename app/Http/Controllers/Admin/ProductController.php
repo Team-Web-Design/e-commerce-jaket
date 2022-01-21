@@ -126,6 +126,70 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $product = Product::find($id);
+
+
+        if ($request->file('gambar_1') != null or $request->file('gambar_2') != null or $request->file('gambar_3') != null) {
+            // remove old file
+            if (
+                $product->gambar_1 != '' and $product->gambar_1 != null or
+                $product->gambar_2 != '' and $product->gambar_3 != null or
+                $product->gambar_3 != '' and $product->gambar_4 != null
+            ) {
+                $filePath_gambar1 = storage_path(env('PATH_IMAGE') . $product->gambar_1);
+                $filePath_gambar2 = storage_path(env('PATH_IMAGE') . $product->gambar_2);
+                $filePath_gambar3 = storage_path(env('PATH_IMAGE') . $product->gambar_3);
+                unlink($filePath_gambar1);
+                unlink($filePath_gambar2);
+                unlink($filePath_gambar3);
+            }
+            $gambar1 = $request->file('gambar_1');
+            $gambar2 = $request->file('gambar_2');
+            $gambar3 = $request->file('gambar_3');
+
+            $gambar1Ext = $gambar1->getClientOriginalExtension();
+            $gambar2Ext = $gambar2->getClientOriginalExtension();
+            $gambar3Ext = $gambar3->getClientOriginalExtension();
+
+            $dateTime = date('Ymd_his');
+
+            $gambar1NewName = 'product_1_image_' . $dateTime . '.' . $gambar1Ext;
+            $gambar2NewName = 'product_2_image_' . $dateTime . '.' . $gambar2Ext;
+            $gambar3NewName = 'product_3_image_' . $dateTime . '.' . $gambar3Ext;
+
+            $gambar1->move(storage_path(env('PATH_PRODUCT_IMAGE')), $gambar1NewName);
+            $gambar2->move(storage_path(env('PATH_PRODUCT_IMAGE')), $gambar2NewName);
+            $gambar3->move(storage_path(env('PATH_PRODUCT_IMAGE')), $gambar3NewName);
+
+            // update
+            $product->update([
+                'nama_produk' => $request->nama_produk,
+                'jenis_bahan' => $request->jenis_bahan,
+                'gambar_1' => $gambar1NewName,
+                'gambar_2' => $gambar2NewName,
+                'gambar_3' => $gambar3NewName,
+                'deskripsi' => $request->deskripsi,
+                'stok' => $request->stok,
+                'harga' => $request->harga,
+                'id_ukuran' => $request->ukuran,
+                'id_kategori' => $request->kategori
+            ]);
+        } else {
+            $product->update([
+                'nama_produk' => $request->nama_produk,
+                'jenis_bahan' => $request->jenis_bahan,
+                'gambar_1' => $product->gambar_1,
+                'gambar_2' => $product->gambar_2,
+                'gambar_3' => $product->gambar_3,
+                'deskripsi' => $request->deskripsi,
+                'stok' => $request->stok,
+                'harga' => $request->harga,
+                'id_ukuran' => $request->ukuran,
+                'id_kategori' => $request->kategori
+            ]);
+        }
+
+        return redirect()->route('admin.produk.index');
     }
 
     /**

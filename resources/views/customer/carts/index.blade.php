@@ -13,21 +13,19 @@
                 </tr>
             </thead>
             <tbody>
-
                 <?php $total = 0; ?>
                 @if ($cart)
                     @foreach ($cart as $products => $product)
-
+                        {{-- {{ $product }} --}}
                         <?php $total += $product['harga'] * $product['stok']; ?>
-
                         <tr>
                             <td data-th="Product">
                                 <div class="row">
                                     <div class="col-sm-3 hidden-xs"><img
-                                            src="{{ route('customer.produk.image', ['imageName' => $product['gambar_1']]) }}"
+                                            src="{{ route('customer.produk.image', ['imageName' => $product->produk->gambar_1]) }}"
                                             width="100" height="100" class="img-responsive" /></div>
                                     <div class="col-sm-9">
-                                        {{-- <h4 class="nomargin">{{ $product['nama_produk'] }}</h4> --}}
+                                        <h4 class="nomargin">{{ $product->produk->nama_produk }}</h4>
                                     </div>
                                 </div>
                             </td>
@@ -56,8 +54,14 @@
                         <a href="{{ route('customer.produk.index') }}" class="btn btn-warning"><i
                                 class="fa fa-angle-left"></i>Lanjutkan
                             Belanja</a>
-                        <a href="#" class="btn btn-primary"><i class="fa fa-angle-left"></i>Lanjut ke
+                        {{-- <form action="{{ route('order-detail.store') }}" method="POST">
+                            @csrf
+                            <button type="submit">Lanjut Ke Pembayaran</button>
+                        </form> --}}
+                        <a href="{{ route('order-detail.store') }}" class="btn btn-primary"><i
+                                class="fa fa-angle-left"></i>Lanjut ke
                             Pembayaran</a>
+
                     </td>
                     <td colspan="2" class="hidden-xs"></td>
                     <td class="hidden-xs text-center"><strong>Total Rp. {{ $total }}</strong></td>

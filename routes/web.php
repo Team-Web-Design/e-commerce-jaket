@@ -31,6 +31,7 @@ Route::name('admin.')->group(function () {
             });
             Route::resource('produk', 'Admin\ProductController')->middleware('is_admin');
             Route::resource('admin', 'Admin\AdminController')->middleware('is_admin');
+            Route::resource('order', 'Admin\OrderController')->middleware('is_admin');
         });
         Route::get('dashboard', 'Admin\AdminController@dashboard')->middleware('is_admin');
     });
@@ -40,9 +41,14 @@ Route::get('customer/produk', 'Customer\ProductController@index')->name('custome
 Route::get('customer/produk/{id}', 'Customer\ProductController@show')->name('customer.produk.show');
 Route::get('customer/produk/image/{imageName}', 'Customer\ProductController@image')->name('customer.produk.image');
 Route::get('customer/carts', 'Customer\CartController@index')->name('customer.carts.index');
-Route::get('customer/carts/add/{id}', 'Customer\CartController@add')->name('customer.carts.add');
+Route::post('customer/carts/add/{id}', 'Customer\CartController@add')->name('customer.carts.add');
 Route::patch('customer/carts/update', 'Customer\CartController@update')->name('customer.carts.update');
 Route::delete('customer/carts/remove', 'Customer\CartController@remove')->name('customer.carts.remove');
+Route::post('customer/carts/store', 'Customer\CartController@store')->name('customer.carts.store');
+
+Route::resource('customer/order-detail', 'Customer\OrderDetailController');
+Route::resource('customer/order', 'Customer\OrderController');
+Route::resource('customer/alamat', 'Customer\AddressController');
 
 // Route::resource('produk', 'Customer\ProductController');
 // Route::resource('cart', 'Customer\CartController');

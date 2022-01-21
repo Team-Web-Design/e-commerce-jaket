@@ -5,7 +5,7 @@
         <caption><a href="{{ route('admin.produk.index') }}">kembali</a></caption>
         <h1>Halaman Tambah Produk</h1>
         <hr>
-        <form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.produk.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -70,9 +70,10 @@
                         <input type="number" name="harga" class="form-control" placeholder="contoht : 150000">
                     </div>
 
-                    <button type="submit" class="btn btn-primary float-md-right">Tambah</button>
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary float-md-right">Tambah</button>
+
         </form>
     </div>
 @endsection

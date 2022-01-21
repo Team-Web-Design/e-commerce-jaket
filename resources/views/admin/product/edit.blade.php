@@ -5,7 +5,8 @@
         <caption><a href="{{ route('admin.produk.index') }}">kembali</a></caption>
         <h1>Halaman Ubah Data Produk</h1>
         <hr>
-        <form action="{{ route('admin.produk.update', ['id' => $product->id]) }}" method="POST">
+        <form action="{{ route('admin.produk.update', ['id' => $product->id]) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
@@ -24,15 +25,15 @@
                     <div class="form-group">
                         <label for="custom_file">Foto Produk 1</label>
                         <input type="file" name="gambar_1" class="form-control" placeholder="Foto 1"
-                            value="{{ $product->gambar_1 }}">
+                            value="{{ $product->gambar_1 }}" required>
                     </div>
                     <div class="form-group mt-2">
                         <label for="custom_file">Foto Produk 2</label>
-                        <input type="file" name="gambar_2" class="form-control" placeholder="Foto 2">
+                        <input type="file" name="gambar_2" class="form-control" placeholder="Foto 2" required>
                     </div>
                     <div class="form-group mt-2">
                         <label for="custom_file">Foto Produk 3</label>
-                        <input type="file" name="gambar_3" class="form-control" placeholder="Foto 3">
+                        <input type="file" name="gambar_3" class="form-control" placeholder="Foto 3" required>
                     </div>
 
                     <div class="form-group mt-2">

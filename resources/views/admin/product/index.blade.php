@@ -8,9 +8,8 @@
         <div class="mt-5">
             <table class="table">
                 <thead class="fixed table-dark">
-                    <tr>
+                    <tr class="align-middle">
                         <th scope="col">#</th>
-                        <th scope="col">Gambar/Foto</th>
                         <th scope="col">Nama Produk</th>
                         <th scope="col">Deskripsi</th>
                         <th scope="col">Harga</th>
@@ -22,8 +21,8 @@
                     @foreach ($products as $item)
                         <tr>
                             <th scope="row">{{ $item->id }}</th>
-                            <td></td>
-                            <td>
+
+                            <td class="w-30">
                                 <a
                                     href="{{ route('admin.produk.show', ['id' => $item->id]) }}">{{ $item->nama_produk }}</a>
                             </td>

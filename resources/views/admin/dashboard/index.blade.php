@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-4">
         <h1 class="mb-3">Halo {{ auth()->user()->name }},<br>Selamat Datang di Dashboard</h1>
         <caption>Daftar Menu</caption>
         <div class="row mt-2">
@@ -38,7 +38,7 @@
                 </a>
             </div>
             <div class="col-md-4 ">
-                <a href="#">
+                <a href="{{ route('admin.order.index') }}">
                     <div class="card p-4 h-100 border-0">
                         <h3>Managemen Order/Pesanan</h3>
                     </div>
