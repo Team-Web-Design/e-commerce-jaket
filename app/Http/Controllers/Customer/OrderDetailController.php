@@ -49,7 +49,7 @@ class OrderDetailController extends Controller
             $order->id_user = auth()->user()->id;
             $order->id_alamat = $request->address;
             $order->bank = $request->bank;
-            $order->status_pemesanan = "belum dibayar";
+            $order->status_pemesanan = "BELUM DIBAYAR";
             $order->save();
 
             foreach ($cart as $item) {
